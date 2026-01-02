@@ -1,188 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>dzxdoz_ — interface</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>dzxdoz_ — systems</title>
 
 <style>
-/* ===== RESET ===== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Inter", system-ui, monospace;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
-/* ===== BACKGROUND ===== */
 body {
+  background: #060606;
+  color: #dcdcdc;
+  overflow-x: hidden;
+}
+
+/* ===== SCROLL SECTIONS ===== */
+section {
   min-height: 100vh;
-  background: radial-gradient(circle at top, #1a1a1a, #0b0b0b);
-  color: #eaeaea;
+  padding: 80px 10vw;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  overflow: hidden;
 }
 
-/* ===== FLOATING BG SHAPES ===== */
-.bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
+.fade {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: 1s ease;
 }
 
-.circle {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.3;
-  animation: float 20s infinite ease-in-out;
+.fade.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.c1 {
-  width: 300px;
-  height: 300px;
-  background: #5f9cff;
-  top: 10%;
-  left: 15%;
+/* ===== HERO ===== */
+.hero h1 {
+  font-size: 3rem;
+  letter-spacing: 2px;
 }
 
-.c2 {
-  width: 400px;
-  height: 400px;
-  background: #9f5fff;
-  bottom: 10%;
-  right: 10%;
-  animation-delay: 5s;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-60px); }
-}
-
-/* ===== CARD ===== */
-.card {
-  position: relative;
-  z-index: 1;
-  width: 360px;
-  padding: 24px;
-  border-radius: 18px;
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(255,255,255,0.15);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-  animation: fadeIn 1.2s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ===== HEADER ===== */
-.header {
-  margin-bottom: 16px;
-}
-
-.header h1 {
-  font-size: 1.4rem;
-  letter-spacing: 1px;
-}
-
-.header span {
-  font-size: 0.85rem;
+.hero p {
   opacity: 0.7;
-}
-
-/* ===== QUOTE ===== */
-.quote {
-  margin: 16px 0;
-  font-size: 0.9rem;
-  line-height: 1.4;
-  opacity: 0.85;
+  margin-top: 10px;
 }
 
 /* ===== TERMINAL ===== */
 .terminal {
-  background: rgba(0,0,0,0.5);
+  background: #0b0b0b;
+  border: 1px solid #1f1f1f;
   border-radius: 12px;
-  padding: 14px;
-  font-size: 0.85rem;
-  margin-bottom: 16px;
+  padding: 20px;
+  margin-top: 30px;
+  max-width: 700px;
 }
 
-.line::before {
-  content: "$ ";
-  opacity: 0.5;
+.line {
+  line-height: 1.6;
 }
 
-/* ===== BUTTONS ===== */
-.buttons {
+.cursor {
+  display: inline-block;
+  width: 10px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* ===== TAGS ===== */
+.tags {
   display: flex;
   gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 20px;
 }
 
-button {
-  flex: 1;
-  padding: 10px;
-  border-radius: 12px;
-  border: none;
-  background: rgba(255,255,255,0.1);
-  color: #fff;
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
-
-button:hover {
-  background: rgba(255,255,255,0.2);
-  transform: translateY(-2px);
+.tag {
+  padding: 6px 12px;
+  border: 1px solid #222;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  opacity: 0.8;
 }
 
 /* ===== FOOTER ===== */
-.footer {
-  margin-top: 14px;
+footer {
+  padding: 40px;
   text-align: center;
-  font-size: 0.75rem;
-  opacity: 0.5;
+  opacity: 0.4;
+  font-size: 0.8rem;
 }
 </style>
 </head>
 
 <body>
 
-<div class="bg">
-  <div class="circle c1"></div>
-  <div class="circle c2"></div>
-</div>
+<section class="hero fade">
+  <h1>dzxdoz_</h1>
+  <p>systems • security research • low-level</p>
 
-<div class="card">
-  <div class="header">
-    <h1>dzxdoz_</h1>
-    <span>developer • chill mode</span>
+  <div class="terminal" id="terminal">
+    <div class="line" id="type"></div>
+    <span class="cursor">█</span>
   </div>
+</section>
 
-  <div class="quote">
-    Иногда легко размышлять о будущем,<br>
-    но забыть о прошлом...
-  </div>
+<section class="fade">
+  <h2>focus</h2>
+  <p style="opacity:.7; max-width:600px; margin-top:10px;">
+    Interested in how systems break, how they work internally,
+    and how defenses are built from the lowest layers up.
+  </p>
 
-  <div class="terminal">
-    <div class="line">status: online</div>
-    <div class="line">mode: coding</div>
-    <div class="line">coffee: true</div>
+  <div class="tags">
+    <div class="tag">C</div>
+    <div class="tag">C++</div>
+    <div class="tag">Assembly</div>
+    <div class="tag">Kernel concepts</div>
+    <div class="tag">Reverse engineering</div>
+    <div class="tag">Security research</div>
   </div>
+</section>
 
-  <div class="buttons">
-    <button onclick="alert('hello.')">ping</button>
-    <button onclick="alert('still coding.')">status</button>
-  </div>
+<section class="fade">
+  <h2>mindset</h2>
+  <p style="opacity:.7; max-width:600px; margin-top:10px;">
+    learning quietly • experimenting safely • documenting ideas  
+    curiosity over chaos
+  </p>
+</section>
 
-  <div class="footer">
-    guns.lol/dzxdoz_
-  </div>
-</div>
+<footer>
+  guns.lol/dzxdoz_
+</footer>
+
+<script>
+/* ===== FAKE TYPING ===== */
+const text = [
+  "initializing environment...",
+  "loading symbols...",
+  "studying system behavior...",
+  "analyzing memory layout...",
+  "building understanding..."
+];
+
+let i = 0, j = 0;
+const speed = 50;
+const el = document.getElementById("type");
+
+function type() {
+  if (j < text[i].length) {
+    el.textContent += text[i][j++];
+    setTimeout(type, speed);
+  } else {
+    setTimeout(() => {
+      el.textContent = "";
+      j = 0;
+      i = (i + 1) % text.length;
+      type();
+    }, 1000);
+  }
+}
+
+type();
+
+/* ===== SCROLL FADE ===== */
+const fades = document.querySelectorAll(".fade");
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add("show");
+  });
+}, { threshold: 0.2 });
+
+fades.forEach(f => observer.observe(f));
+</script>
 
 </body>
 </html>
